@@ -1,12 +1,11 @@
-const DATA_SHEET_NAME = 'Form Responses 1';
 const COLUMN_ISBN = 0;
 const COLUMN_TITLE = 1;
 const COLUMN_AUTHORS = 3;
 const API_URL = "https://www.googleapis.com/books/v1/volumes?country=US";
 
-function processDataFromGoogleSheet() {
-  var spreadsheet = SpreadsheetApp.getActiveSpreadsheet();
-  var dataSheet = spreadsheet.getSheetByName(DATA_SHEET_NAME);
+function processDataFromGoogleSheet(url) {
+  var spreadsheet = SpreadsheetApp.openByUrl(url);
+  var dataSheet = spreadsheet.getSheets()[0];
   var data = dataSheet.getDataRange().getValues();
   for (var i=1; i<data.length; i++) {
     var isbn = data[i][COLUMN_ISBN];
@@ -29,10 +28,12 @@ function processDataFromGoogleSheet() {
 function getBookDetails(isbn) {
   var url = API_URL + "&q=isbn:" + isbn;
   var response = UrlFetchApp.fetch(url);
-  var results = JSON.parse(response);
+  var results = JSON.parse(response.getContentText());
   if (results.totalItems) {
     var book = results.items[0];
     return book;
   } 
   return false;
 }
+
+processDataFromGoogleSheet("https://docs.google.com/spreadsheets/d/example123/edit");
