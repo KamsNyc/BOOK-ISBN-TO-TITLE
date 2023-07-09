@@ -1,5 +1,5 @@
 Book Details Processor for Google Sheets
-    - This script was created by Kamsnyc to process data in a Google Sheet and retrieve book details from Google Books API.
+    - This script was created to process data in a Google Sheet and retrieve book details from Google Books API.
 
 Prerequisites
     - Google account
